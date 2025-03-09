@@ -4,6 +4,7 @@ Lista::Lista(){
 	cabeca = 0; 
 	qtd = 0;
 	ultimoNoDado = 0;
+	
 } 
 
 Lista::~Lista(){ 
@@ -28,6 +29,11 @@ void Lista::insere_inicio(int i){
 }
 
 void Lista::inserirFim(int i){ // OK
+	if(qtd==0){
+		insere_inicio(i);
+		return;
+	}
+	
 	no_dado* aux = cabeca;
 	while(aux->prox!=NULL){
 		aux = aux->prox;
@@ -50,12 +56,15 @@ void Lista::imprime(){
 
 void Lista::imprimirFim(no_dado * aux){
 	//Recursividade
+	if(aux == NULL){
+		cout << "Lista vazia" << endl;
+	}
+
 	if(!isEmpty(aux)){
 		imprimirFim(aux->prox);
 		cout << aux->info << " - ";	
-	}else{
-		cout << "Fim da lista" << endl;
 	}
+	
 }
 
 bool Lista::vazia(){ 
@@ -65,8 +74,11 @@ bool Lista::vazia(){
 bool Lista::busca(int i){ 
 	
 	for (no_dado* p = cabeca; p != NULL; p = p->prox)
-		if (p->info == i)
+		if (p->info == i){
+			//cout << "Endereco do dado encontrado: " <<static_cast<void*>(p) << endl;
 			return true; 
+		}
+			
 	
 	return false; 		
 }
@@ -102,6 +114,7 @@ bool Lista::retiraInicio(){
 		no_dado* aux = cabeca->prox;
 		free(cabeca);
 		cabeca = aux;
+		qtd--;
 		return true;
 	}
 }
@@ -117,6 +130,7 @@ bool Lista::retiraFim(){
 		free(aux->prox);
 		aux->prox = NULL;
 		ultimoNoDado = aux;
+		qtd--;
 		return true;
 	}
 
@@ -126,13 +140,16 @@ int Lista::tamanho(){
 }
 
 void Lista::libera(){ 
-	no_dado* p = cabeca;
- 	while (p != NULL) {
- 		no_dado* t = p->prox; 
- 		free(p); 
- 		p = t; 
- 	}
- 	Lista(); 
+    no_dado* p = cabeca;
+     while (p != NULL) {
+         no_dado* t = p->prox; 
+         free(p); 
+         p = t; 
+     }
+     // Redefinindo os valores dos atributos diretamente
+     cabeca = NULL;
+     qtd = 0;
+     ultimoNoDado = NULL;
 }
 
 bool Lista::isEmpty(no_dado* l){ 

@@ -18,8 +18,7 @@ void menu(){
 	cout << "11 - Liberar" << endl;		
 	cout << "12 - Destruir" << endl;//Destrutor	
 	cout << "0 - Sair" << endl;	
-
-	cout << "Escolha: " <<endl;
+	cout << "Escolha:";
 }
 
 void print_tamanho(int t){
@@ -48,7 +47,7 @@ void print_busca(bool x){
 }
 int inserirNumero(){
 	int x;
-	cout << "Digite o numero a ser inserido: ";
+	cout << "Digite um numero: ";
 	cin >> x;	
 	return x;
 }
@@ -60,6 +59,7 @@ int main(int argc, char** argv) {
 		
 		menu();
 		cin >> op;
+		system("cls");
 		switch (op)
 		{
 		case 1:
@@ -69,10 +69,13 @@ int main(int argc, char** argv) {
 			lista->inserirFim(inserirNumero());
 			break;
 		case 3:
+			cout << "Imprimindo lista" << endl;
 			lista->imprime();
 			break;
 		case 4:
+			cout << "Imprimindo lista \n Info: " << endl;
 			lista->imprimirFim(lista->getCabeca());
+			cout << endl;
 			break;
 		case 5:
 			lista->vazia();
@@ -83,10 +86,13 @@ int main(int argc, char** argv) {
 			}else{
 				cout << "Numero inexistente" << endl;
 			}
-			
 			break;
 		case 7:
-			lista->retira(inserirNumero());
+			if(lista->retira(inserirNumero())){
+					cout << "Numero removido" << endl;
+			}else{
+					cout << "Numero inexistente" << endl;
+				}
 			break;
 		case 8:
 			if(lista->retiraInicio()){
@@ -103,10 +109,15 @@ int main(int argc, char** argv) {
 			}
 			break;
 		case 10:
-			/* code */
+			cout<< "Quantidade de itens na lista: " << lista->tamanho() << endl;
 			break;
 		case 11:	
-			/* code */
+			lista->libera();
+			cout << "Lista liberada, nova lista instanciada" << endl;
+			break;
+		case 12:	
+			lista->~Lista();
+			cout << "Lista destruida" << endl;
 			break;
 		case 0:
 			cout << "Saindo!" << endl;
